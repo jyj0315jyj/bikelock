@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Bike Lock</string>
+    <string name="addev">Add Bike Lock</string>
 </resources>
