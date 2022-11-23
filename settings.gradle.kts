@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Bike Lock"
+rootProject.name = "BikeLock"
 include(":app")
