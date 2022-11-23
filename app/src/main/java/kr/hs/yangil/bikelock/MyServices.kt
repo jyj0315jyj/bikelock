@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Binder
 import android.os.IBinder
-import android.util.Log
 import java.util.*
 
 class MyServices: Service() {
@@ -60,9 +59,6 @@ class MyServices: Service() {
     }
     fun connect(addr: String?)  {
         if (checkSelfPermission(android.Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
-            if (addr != null) {
-                Log.d(null, addr)
-            }
             val dev: BluetoothGatt =
                 bluetoothManager.adapter.getRemoteDevice(addr).connectGatt(this, false, bback)
             dev.discoverServices()
