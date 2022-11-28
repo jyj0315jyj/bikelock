@@ -10,7 +10,7 @@ import java.util.*
 
 class MyServices: Service() {
     val binder: Mynder = Mynder()
-    lateinit var bluetoothManager: BluetoothManager
+    var bluetoothManager: BluetoothManager? = null
     val bback: BluetoothGattCallback = object : BluetoothGattCallback() {
         override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
             super.onConnectionStateChange(gatt, status, newState)
@@ -55,21 +55,24 @@ class MyServices: Service() {
         return binder
     }
     fun init() {
-        bluetoothManager = getSystemService<BluetoothManager>(BluetoothManager::class.java)
+        if (bluetoothManager == null) {
+            bluetoothManager = getSystemService<BluetoothManager>(BluetoothManager::class.java)
+        }
     }
     fun connect(addr: String?)  {
         if (checkSelfPermission(android.Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
             val dev: BluetoothGatt =
-                bluetoothManager.adapter.getRemoteDevice(addr).connectGatt(this, false, bback)
+                bluetoothManager!!.adapter.getRemoteDevice(addr).connectGatt(this, false, bback)
             dev.discoverServices()
         }
     }
-    fun findDevice(): String? {
-        val bdev = if (checkSelfPermission(android.Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) bluetoothManager.adapter.bondedDevices else setOf()
+    fun findDevice(): String {
+        val bdev = if (checkSelfPermission(android.Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) bluetoothManager!!.adapter.bondedDevices else setOf()
         var kord: String = ""
         for (devk: BluetoothDevice in bdev) {
             if (devk.name == "YLTester") {
                 kord = devk.address
+                break
             }
         }
         return kord

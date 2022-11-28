@@ -10,15 +10,13 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val conn = object : ServiceConnection {
+    private fun every() {
+        bindService(Intent(this, MyServices::class.java), object : ServiceConnection {
             override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
                 val serv: MyServices = (service as MyServices.Mynder).getServices()
                 serv.init()
                 val kord: String? = serv.findDevice()
-                if (kord != null) {
+                if (kord != "") {
                     MainScope().launch {
                         val inte = Intent(this@MainActivity, NextActivity::class.java).apply {
                             putExtra("add", kord)
@@ -31,7 +29,16 @@ class MainActivity : AppCompatActivity() {
             override fun onServiceDisconnected(name: ComponentName?) {
 
             }
-        }
-        bindService(Intent(this, MyServices::class.java), conn, BIND_AUTO_CREATE)
+        }, BIND_AUTO_CREATE)
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        every()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        every()
     }
 }

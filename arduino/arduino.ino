@@ -24,7 +24,7 @@ void loop() {
 
   if (IMU.gyroscopeAvailable() && BLE.central()) {
     IMU.readGyroscope(x, y, z);
-    if ((abs(x) + abs(y) + abs(z)) / 3 > 40) {
+    if ((abs(x) + abs(y) + abs(z)) / 3 > 50) {
       digitalWrite(13, HIGH);
       switchCharacteristic.writeValue(0x01);
     }
@@ -33,5 +33,5 @@ void loop() {
       switchCharacteristic.writeValue(0x00);
     }
 }
-  delay(150);
+  delay(100);
 }
