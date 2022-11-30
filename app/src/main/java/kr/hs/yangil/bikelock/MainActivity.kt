@@ -15,12 +15,13 @@ class MainActivity : AppCompatActivity() {
             override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
                 val serv: MyServices = (service as MyServices.Mynder).getServices()
                 serv.init()
-                val kord: String? = serv.findDevice()
+                val kord: String = serv.findDevice()
                 if (kord != "") {
                     MainScope().launch {
                         val inte = Intent(this@MainActivity, NextActivity::class.java).apply {
                             putExtra("add", kord)
                         }
+                        serv.connect(kord)
                         startActivity(inte)
                     }
                 }

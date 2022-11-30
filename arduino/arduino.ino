@@ -12,6 +12,7 @@ void setup() {
   BLE.begin();
   BLE.setConnectable(true);
   BLE.setDeviceName("YLTester");
+  BLE.setLocalName("YLTester");
   ledService.addCharacteristic(switchCharacteristic);
   BLE.addService(ledService);
   BLE.setAdvertisedService(ledService);
@@ -21,7 +22,7 @@ void setup() {
 void loop() {
   float x, y, z;
 
-  if (IMU.gyroscopeAvailable() && BLE.central()) {
+  if ((IMU.gyroscopeAvailable() && BLE.central())) {
     IMU.readGyroscope(x, y, z);
     if ((abs(x) + abs(y) + abs(z)) / 3 > 50) {
       digitalWrite(13, HIGH);

@@ -47,13 +47,12 @@ class NextActivity : AppCompatActivity() {
         bindService(Intent(this, MyServices::class.java),
             object : ServiceConnection {
                 override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-                    val serv: MyServices = (service as MyServices.Mynder).getServices()
-                    serv.connect(intent.extras?.getString("add"))
+
                 }
 
                 override fun onServiceDisconnected(name: ComponentName?) {
 
                 }
-            }, BIND_AUTO_CREATE)
+            }, 0)
     }
 }
