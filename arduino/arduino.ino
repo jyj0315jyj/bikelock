@@ -12,7 +12,6 @@ void setup() {
   BLE.begin();
   BLE.setConnectable(true);
   BLE.setDeviceName("YLTester");
-  BLE.setLocalName("YLTester");
   ledService.addCharacteristic(switchCharacteristic);
   BLE.addService(ledService);
   BLE.setAdvertisedService(ledService);
