@@ -5,7 +5,12 @@ import android.os.Bundle
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
+import android.os.Build
+import android.os.Debug
 import android.os.IBinder
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.NotificationChannelCompat
+import androidx.core.app.NotificationCompat
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -35,6 +40,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        NotificationManagerCompat.from(this).createNotificationChannel(with(NotificationChannelCompat.Builder("Tester", NotificationManagerCompat.IMPORTANCE_HIGH)) {
+            setName("Tester")
+            setDescription("Tester")
+            build()
+        })
         every()
     }
 
