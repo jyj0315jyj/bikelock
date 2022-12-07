@@ -39,7 +39,6 @@ class NextActivity : AppCompatActivity() {
                         if (switch.isChecked) {
                             button.isEnabled = true
                             if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED || Build.VERSION.SDK_INT < 33) {
-                                Log.d("Hello", "Notifacarion")
                                 NotificationManagerCompat.from(this@NextActivity).notify(0, with(NotificationCompat.Builder(this@NextActivity, "Tester")) {
                                     setSmallIcon(R.drawable.ic_stat_name)
                                     setContentTitle("Alert")
